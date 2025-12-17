@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import axiosInstance, { setAccessToken } from "./api/axiosInstance";
 import ProtectedRoute from "./components/HOCs/ProtectedRoute";
-import LoginPage from "./components/pages/loginPage";
+import LoginPage from "./components/pages/LoginPage";
 
 function App() {
  const [user, setUser] = useState(null);
