@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const authRouter = require('./routes/auth.router');
 const cookieParser = require('cookie-parser')
-const contentRouter = require('./routes/content.router')
+const contentRouter = require('./routes/content.router');
+const orderRouter = require('./routes/order.router');
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.use(cookieParser())
 
 
 app.use('/api/auth', authRouter)
-app.use('/api', contentRouter)
+app.use('/api/content', contentRouter)
+app.use('/api/order', orderRouter)
 
 app.use((err, req, res, next) => {
   console.log(err);
