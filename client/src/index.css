@@ -365,7 +365,7 @@ main {
 
 .gallery_title {
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: clamp(32px, 4vw, 56px);
+  font-size: clamp(30px, 4vw, 54px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 14px;
