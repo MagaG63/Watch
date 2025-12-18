@@ -7,6 +7,7 @@ import axios from "axios";
 import axiosInstance, { setAccessToken } from "./api/axiosInstance";
 import ProtectedRoute from "./components/HOCs/ProtectedRoute";
 import LoginPage from "./components/pages/LoginPage";
+import AdminPage from "./components/pages/AdminPage";
 
 function App() {
  const [user, setUser] = useState(null);
@@ -20,7 +21,6 @@ function App() {
 
 const loginHandler = async (e) => {
    e.preventDefault();
-
     const formData = new FormData(e.target);
 
     const data = Object.fromEntries(formData);
@@ -56,8 +56,16 @@ const orderHandler = async (e) => {
        <Route
         path="/login"
         element={
-          <ProtectedRoute isAllowed={!user} redirectTo="/">
+          <ProtectedRoute isAllowed={!user} redirectTo="/admin">
             <LoginPage loginHandler={loginHandler} />
+          </ProtectedRoute>
+        }
+      />
+        <Route
+        path="/admin"
+        element={
+          <ProtectedRoute isAllowed={!!user} redirectTo="/">
+            <AdminPage loginHandler={loginHandler} />
           </ProtectedRoute>
         }
       />

@@ -1,4 +1,8 @@
+const bcrypt = require('bcrypt');
 'use strict';
+
+
+
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -6,7 +10,7 @@ module.exports = {
       {
         name: 'Кирилл Лукичев',
         email: 'kirill@example.com',
-        hashpass: '$2a$10$N9qo8uLOickgx2ZMRZoMy...', // Замени на реальный хеш пароля
+        hashpass: await bcrypt.hash("123", 10), // Замени на реальный хеш пароля
         createdAt: new Date(),
         updatedAt: new Date(),
       },
