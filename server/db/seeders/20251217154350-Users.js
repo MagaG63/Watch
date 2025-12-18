@@ -6,7 +6,7 @@ module.exports = {
       {
         name: 'Кирилл Лукичев',
         email: 'kirill@example.com',
-        hashpass: '$2a$10$N9qo8uLOickgx2ZMRZoMy...', // Замени на реальный хеш пароля
+        hashpass: '123', // Замени на реальный хеш пароля
         createdAt: new Date(),
         updatedAt: new Date(),
       },
