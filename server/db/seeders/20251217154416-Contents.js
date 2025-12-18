@@ -12,7 +12,7 @@ module.exports = {
       },
       {
         img: 'https://avatars.mds.yandex.net/i?id=ae2d38b4ad245ad4160b7f201e3cae5e_l-9269645-images-thumbs&n=13',
-        info: 'Теплота золота. Маятник турбийона, золото 750 пробы, сапфировое стекло',
+        info: 'Теплота золота. Маятник турбийона, золото 750 пробы, сапфировое стекло, циферблат из эмали',
         userId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -33,6 +33,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+
     ], {});
   },
 

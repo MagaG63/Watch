@@ -12,7 +12,7 @@ app.use(cookieParser())
 
 
 app.use('/api/auth', authRouter)
-app.use('/api/content', contentRouter)
+app.use('/api', contentRouter)
 
 app.use((err, req, res, next) => {
   console.log(err);
