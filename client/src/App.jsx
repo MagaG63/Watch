@@ -1,7 +1,6 @@
-import { Route, Routes, useNavigate } from "react-router";
+import { Route, Routes } from "react-router";
 import HomePage from "./components/pages/HomePage";
 import Layout from "./components/Layout";
-import RegistrationPage from "./components/pages/RegistrationPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import axiosInstance, { setAccessToken } from "./api/axiosInstance";
@@ -29,9 +28,9 @@ const loginHandler = async (e) => {
     setAccessToken(response.data.accessToken);
 }
 
-const orderHandler = async (e) => {
-  null
-}
+// const orderHandler = async (e) => {
+//   null
+// }
 
     useEffect(() => {
     axios

@@ -1,23 +1,15 @@
-import { Container } from "react-bootstrap"
-
 function Gallery ({ content }) {
     return (
-        <div className="main_gallery">
-            <h2 className="gallery_title">Коллекция уникальный часов</h2>
-            <div>
-                <h3 className="gallery_text">Каждое изделие создается в единственном экземпляре и отражает индивидуальность своего владельца</h3>
-            </div>
-            <div className="cards_container">
-                <div className="oneCard">
-                    <div className="card">
-                    {content.img}
-                    </div>
-                    <div>
-                    {content.info}
-                    </div> 
-                </div>
-            </div>
+    <div className="oneCard">
+        <div className="card_image">
+            <img src={content.img} alt={content.title} />
         </div>
+        <div className="card_body">
+            <h3 className="card_title">{content.title}</h3>
+            <p className="card_text">{content.info}</p>
+            <span className="card_price"> По запросу</span>
+        </div>
+    </div>
     )
 }
 
