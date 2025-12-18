@@ -1,0 +1,352 @@
+/* =========================
+   Base / Layout
+   ========================= */
+:root {
+  --bg-0: #000;
+  --bg-1: #0b0b0b;
+  --bg-2: #141414;
+
+  --text: #ededed;
+  --muted: rgba(237, 237, 237, 0.72);
+
+  --gold: #c9a34a;
+
+  --line: rgba(255, 255, 255, 0.08);
+
+  /* шапка */
+  --header-h: 72px;
+  --header-bg: rgba(0, 0, 0, 0.18); /* было темнее — сделали легче */
+  --header-blur: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Свечение по центру уменьшено:
+     - меньше альфа
+     - меньше “радиус” (резче затухает) */
+  background:
+    radial-gradient(circle at 50% 32%,
+      rgba(201, 163, 74, 0.10) 0%,
+      rgba(201, 163, 74, 0.05) 18%,
+      rgba(0, 0, 0, 0) 42%
+    ),
+    radial-gradient(circle at 50% 40%,
+      var(--bg-2) 0%,
+      var(--bg-1) 45%,
+      var(--bg-0) 100%
+    );
+
+  overflow-x: hidden;
+}
+
+/* Header из Layout.jsx — без классов, поэтому стилим тег */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: var(--header-h);
+  z-index: 1000;
+
+  /* Шапка “стекло”, но не слишком тёмная */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.22),
+    rgba(0, 0, 0, 0.12)
+  );
+  backdrop-filter: blur(var(--header-blur));
+  border-bottom: 1px solid var(--line);
+
+  /* Убираем сильную тень, делаем едва заметную */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+main {
+  padding-top: calc(var(--header-h) + 28px);
+}
+
+/* =========================
+   NavBar
+   ========================= */
+.navBar {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+}
+
+/* Container от react-bootstrap сам задаёт ширины,
+   мы только выравниваем содержимое */
+.navBarContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ====== ADMIN: иконка -> текст по hover (один и тот же <a>) ====== */
+
+/* держим в правом верхнем углу */
+.adminLogin {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1100;
+}
+
+/* сама ссылка на /login */
+.adminLogin a[href="/login"] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  width: 34px;              /* по умолчанию маленькая “кнопка” */
+  padding: 0;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+
+  /* текст есть в DOM, но визуально скрыт */
+  color: transparent;
+  text-decoration: none;
+
+  overflow: hidden;          /* чтобы текст не торчал */
+  white-space: nowrap;
+
+  transition:
+    width 0.22s ease,
+    padding 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.18s ease;
+}
+
+/* иконка рисуется поверх текста */
+.adminLogin a[href="/login"]::before {
+  content: "⚙";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+
+  color: rgba(237, 237, 237, 0.55);
+  opacity: 1;
+
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* НАВЕДЕНИЕ: “кнопка” разворачивается в ссылку с текстом */
+.adminLogin a[href="/login"]:hover {
+  justify-content: flex-start;
+  width: auto;
+  max-width: min(360px, calc(100vw - 24px)); /* чтобы не улетало за экран */
+  padding: 0 14px;
+
+  color: var(--text);        /* показываем текст */
+  border-color: rgba(201, 163, 74, 0.35);
+  background: rgba(20, 20, 20, 0.92);
+}
+
+/* на hover прячем иконку */
+.adminLogin a[href="/login"]:hover::before {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* фокус с клавиатуры */
+.adminLogin a[href="/login"]:focus-visible {
+  outline: 2px solid rgba(201, 163, 74, 0.55);
+  outline-offset: 2px;
+}
+
+/* если слово/фраза вдруг длиннее — на маленьких экранах разрешаем перенос */
+@media (max-width: 420px) {
+  .adminLogin a[href="/login"]:hover {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* кнопка "Выход" (когда user есть) — отдельно */
+.adminLogin button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* =========================
+   MainCard (Hero)
+   ========================= */
+
+.mainCard {
+  position: relative;
+  min-height: calc(100vh - var(--header-h, 72px));
+  padding: clamp(28px, 5vw, 70px) 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  isolation: isolate;
+}
+
+/* Один заголовок */
+.main_title {
+  margin: 0 0 12px;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  font-weight: 600;
+
+  /* меньше, чем раньше — чтобы было как на картинке */
+  font-size: clamp(34px, 4.8vw, 72px);
+
+  /* по умолчанию белый */
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
+
+  /* стараемся держать в одну строку */
+  white-space: nowrap;
+  max-width: 92vw;
+}
+
+/* Если внутри main_title у тебя есть span для "Время" —
+   можно покрасить его в золото (не обязательно, но красиво) */
+.main_title .gold {
+  color: var(--gold, #c9a34a);
+  text-shadow: 0 0 22px rgba(201, 163, 74, 0.22);
+}
+
+/* Текст под заголовком */
+.main_text {
+  margin: 0;
+  max-width: 720px;
+
+  font-size: clamp(13px, 1.45vw, 16px);
+  line-height: 1.6;
+
+  color: var(--muted, rgba(237, 237, 237, 0.68));
+}
+
+/* Кнопка */
+.main_ordering {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.main_ordering button {
+  appearance: none;
+  border: 1px solid rgba(201, 163, 74, 0.28);
+  background: rgba(201, 163, 74, 0.92);
+  color: #0b0b0b;
+
+  padding: 10px 18px;
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: transform 0.15s ease, filter 0.2s ease, background 0.2s ease;
+}
+
+.main_ordering button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.main_ordering button:active {
+  transform: translateY(0);
+}
+
+.main_ordering button:focus-visible {
+  outline: 2px solid rgba(201, 163, 74, 0.55);
+  outline-offset: 3px;
+}
+
+/* =========================
+   “Часы/свечение” фон
+   ========================= */
+
+.mainCard::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+
+  /* чуть меньше и аккуратнее */
+  width: min(300px, 56vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0) 57%,
+      rgba(201,163,74,0.20) 59%,
+      rgba(201,163,74,0.09) 68%,
+      rgba(0,0,0,0) 72%
+    );
+
+  box-shadow:
+    0 0 0 2px rgba(201, 163, 74, 0.10) inset,
+    0 0 26px rgba(201, 163, 74, 0.18),
+    0 0 70px rgba(201, 163, 74, 0.10);
+
+  opacity: 0.92;
+  z-index: -1;
+}
+
+.mainCard::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+
+  width: min(250px, 48vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+
+  background: radial-gradient(circle at 50% 50%,
+    rgba(0,0,0,0.68) 0%,
+    rgba(0,0,0,0.52) 56%,
+    rgba(0,0,0,0) 74%
+  );
+
+  opacity: 0.55;
+  z-index: -1;
+}
+
+/* На очень узких экранах разрешаем перенос, чтобы не ломалось */
+@media (max-width: 420px) {
+  .main_title {
+    white-space: normal;
+    font-size: 30px;
+  }
+}
+

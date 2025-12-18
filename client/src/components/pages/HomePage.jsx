@@ -1,8 +1,24 @@
-export default function HomePage({ user }) {
+import MainCard from '../ui/MainCard'
+// import Gallery from '../ui/Gallery'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+export default function HomePage({}) {
    
+    const [content, setContent] = useState('')
+
+    useEffect(() => {
+        axios.get('/content').then((res) => setContent(res.data))
+    }, [])
+
     return(
         <>
-        {user ? (<div style={{display: "flex", justifyContent: "center", fontSize: "60px"}}>Добро пожаловать {user.name}</div>) : (<div style={{display: "flex", justifyContent: "center", fontSize: "60px"}}>Авторизуйтесь</div>)}
+        <MainCard></MainCard>
+        {/* <div>
+            {content.map((card) =>(
+                <Gallery content = {card}></Gallery>
+            ))}
+        </div> */}
         </>
     )
 }

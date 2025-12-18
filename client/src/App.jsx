@@ -12,22 +12,7 @@ function App() {
  const [user, setUser] = useState(null);
    const [loading, setLoading] = useState(true);
 
-  const registerHandler = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-
-    const data = Object.fromEntries(formData);
-    console.log(data)
-    const response = await axios.post("/api/auth/registration", data);
-    console.log(response);
-    setUser(response.data.user);
-    setAccessToken(response.data.accessToken);
-
-    // navigate("/");
-  };
-
-    const logoutHandler = async () => {
+  const logoutHandler = async () => {
     await axios.get("/api/auth/logout");
     setUser(null);
     setAccessToken("");
@@ -42,6 +27,10 @@ const loginHandler = async (e) => {
         const response = await axiosInstance.post("auth/login", data);
     setUser(response.data.user);
     setAccessToken(response.data.accessToken);
+}
+
+const orderHandler = async (e) => {
+  null
 }
 
     useEffect(() => {
@@ -63,15 +52,7 @@ const loginHandler = async (e) => {
   return (
        <Routes>
     <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-      <Route path="/" element={<HomePage user={user} />} />
-      <Route
-        path="/rega"
-        element={
-          <ProtectedRoute isAllowed={!user} redirectTo="/">
-            <RegistrationPage registerHandler={registerHandler} />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/" element={<HomePage/>} />
        <Route
         path="/login"
         element={
