@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router";
+import { Route, Routes, NavLink } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import Layout from "./components/Layout";
 import RegistrationPage from "./components/pages/RegistrationPage";
@@ -7,6 +7,7 @@ import axios from "axios";
 import axiosInstance, { setAccessToken } from "./api/axiosInstance";
 import ProtectedRoute from "./components/HOCs/ProtectedRoute";
 import LoginPage from "./components/pages/LoginPage";
+import ClientPage from "./components/pages/ClientPage";
 
 function App() {
  const [user, setUser] = useState(null);
@@ -29,9 +30,11 @@ const loginHandler = async (e) => {
     setAccessToken(response.data.accessToken);
 }
 
-const orderHandler = async (e) => {
-  null
-}
+// const orderHandler = async (e) => {
+//   null
+// }
+
+
 
     useEffect(() => {
     axios
@@ -53,6 +56,7 @@ const orderHandler = async (e) => {
        <Routes>
     <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
       <Route path="/" element={<HomePage/>} />
+      <Route path="/client" element={<ClientPage/>} />
        <Route
         path="/login"
         element={

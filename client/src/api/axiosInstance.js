@@ -27,6 +27,8 @@ axiosInstance.interceptors.response.use((res) => res, async (err) => {
     prev.headers.Authorization = `Bearer ${accessToken}`;
     return axiosInstance(prev)
   }
+
+  return Promise.reject(err)
 })
 
 export default axiosInstance
