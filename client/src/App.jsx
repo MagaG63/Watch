@@ -1,3 +1,13 @@
+import { Route, Routes, NavLink } from "react-router-dom";
+import HomePage from "./components/pages/HomePage";
+import Layout from "./components/Layout";
+import RegistrationPage from "./components/pages/RegistrationPage";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance, { setAccessToken } from "./api/axiosInstance";
+import ProtectedRoute from "./components/HOCs/ProtectedRoute";
+import LoginPage from "./components/pages/LoginPage";
+import ClientPage from "./components/pages/ClientPage";
 import { Route, Routes } from 'react-router';
 import HomePage from './components/pages/HomePage';
 import Layout from './components/Layout';
@@ -48,6 +58,12 @@ function App() {
   }
 
   return (
+       <Routes>
+    <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
+      <Route path="/" element={<HomePage/>} />
+      <Route path="/client" element={<ClientPage/>} />
+       <Route
+        path="/login"
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
         <Route
